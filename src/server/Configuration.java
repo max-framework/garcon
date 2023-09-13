@@ -1,6 +1,7 @@
 package server;
 
 import exceptions.ResourceNotFoundException;
+import model.Protocol;
 import model.ServerConfigurationOption;
 
 import java.io.File;
@@ -9,13 +10,13 @@ import java.util.Map;
 public class Configuration {
 
     public static final String ROOT = System.getProperty("user.dir") + File.separator;
-    public static final int REQUEST_SIZE = Math.round(Integer.MAX_VALUE / 4);
+    public static final int REQUEST_SIZE = Integer.MAX_VALUE / 4;
 
     private static Configuration instance = null;
 
     private int port;
     private String webroot;
-    private String protocol;
+    private Protocol protocol;
 
     private Configuration() {
         Map<String, String> configs = null;
@@ -48,7 +49,7 @@ public class Configuration {
                 this.webroot = ROOT + this.webroot;
             }
 
-            this.protocol = configs.get(ServerConfigurationOption.PROTOCOL.name());
+            this.protocol = Protocol.getProtocol(configs.get(ServerConfigurationOption.PROTOCOL.name()));
             if (this.protocol == null) {
                 this.protocol = ServerConfigurationOption.DEFAULT_PROTOCOL;
                 System.out.println("Missing protocol, using the default one: " + this.protocol);
@@ -70,7 +71,7 @@ public class Configuration {
         return this.webroot;
     }
 
-    public String getProtocol() {
+    public Protocol getProtocol() {
         return this.protocol;
     }
 }

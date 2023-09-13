@@ -1,5 +1,6 @@
 package model.HTTP;
 
+import model.Protocol;
 import model.Response;
 
 import java.util.HashMap;
@@ -8,12 +9,12 @@ import java.util.stream.Collectors;
 
 public class HTTPResponse implements Response {
 
-    private String protocol;
-    private String code;
-    private Map<String, String> headers;
-    private String body;
+    private final Protocol protocol;
+    private final String code;
+    private final Map<String, String> headers;
+    private final String body;
 
-    public HTTPResponse(String protocol, String code, Map<String, String> headers, String body) {
+    public HTTPResponse(Protocol protocol, String code, Map<String, String> headers, String body) {
         this.protocol = protocol;
         this.code = code;
         this.headers = headers == null ? new HashMap<>() : headers;
@@ -27,7 +28,7 @@ public class HTTPResponse implements Response {
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .collect(Collectors.joining("\n"));
 
-        builder.append(protocol)
+        builder.append(protocol.name())
                 .append(" ")
                 .append(code)
                 .append("\n")
@@ -42,7 +43,7 @@ public class HTTPResponse implements Response {
         return getText().getBytes();
     }
 
-    public String getProtocol() {
+    public Protocol getProtocol() {
         return protocol;
     }
 

@@ -5,7 +5,7 @@ public enum ServerConfigurationOption {
     WEBROOT,
     PROTOCOL;
 
-    public static int DEFAULT_PORT = 6969;
-    public static String DEFAULT_WEBROOT = "webroot";
-    public static String DEFAULT_PROTOCOL = "HTTP/1.1";
+    public static final int DEFAULT_PORT = 6969;
+    public static final String DEFAULT_WEBROOT = "webroot";
+    public static final Protocol DEFAULT_PROTOCOL = Protocol.HTTP10;
 }
